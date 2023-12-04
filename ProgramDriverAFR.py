@@ -1,45 +1,39 @@
-from ProgramExerciseAFR import Food
-
-class PurchasedItem:
-    def __init__(self, foodname, pounds, price_per_pound):
-        self.name = foodname
-        self.pounds = pounds
-        self.price_per_pound = price_per_pound
-
-    def calculate_cost(self):
-        return self.pounds * self.price_per_pound
+from ProgramExerciseAFR import Food 
 
 def create_item_list():
     item_list = []
-    num_items = int(input("How many items will you order today? "))
+    num_items = int(input("Enter the number of items to purchase: "))
 
     while num_items < 1:
-        print("Number of items must be at least 1!!!!")
-        num_items = int(input("How many items will you order today? "))
+        print("Number of items must be at least 1. Please try again.")
+        num_items = int(input("Enter the number of items to purchase: "))
 
     for _ in range(num_items):
-        name = input("Enter the name of the item: ")
-        pounds = float(input("Enter the amount of the item in pounds: "))
-        
+        name = input("Enter the name of the food item: ")
+        pounds = float(input("Enter the amount of the food item in pounds: "))
+
         while pounds <= 0:
             print("Amount of pounds must be greater than 0. Please try again.")
-            pounds = float(input("Enter the amount of the item in pounds: "))
-        
-        item = PurchasedItem(name, pounds)
-        item_list.append(item)
+            pounds = float(input("Enter the amount of the food item in pounds: "))
+
+        food_item = Food(name, pounds)
+        item_list.append(food_item)
 
     return item_list
 
 def display_item_list(item_list):
     for item in item_list:
-        print(f"Item: {item.name}, Pounds: {item.pounds}, Price per Pound: ${item.price_per_pound:.2f}, Cost: ${item.calculate_cost():.2f}")
+        print(item)
 
+def calculate_total_cost(item_list):
+    total_cost = sum(item.getcalulated() for item in item_list)
+    return total_cost
 
 def main():
     items = create_item_list()
     print("\nItems Purchased:")
     display_item_list(items)
-    
+
     total_cost = calculate_total_cost(items)
     print(f"\nTotal Cost of Items: ${total_cost:.2f}")
 
